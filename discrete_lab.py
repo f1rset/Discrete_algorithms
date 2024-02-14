@@ -1,8 +1,10 @@
 """Module for graphs"""
+import time
 import random
-import networkx as nx
-import matplotlib.pyplot as plt
 from itertools import combinations, groupby
+import matplotlib.pyplot as plt
+import networkx as nx
+from tqdm import tqdm
 
 #_________________________________________________________
 
@@ -119,3 +121,18 @@ def gnp_random_connected_graph(num_of_nodes: int,
     return G
 
 G = gnp_random_connected_graph(10, 0.5, True, True)
+if __name__=='__main__':
+    NUM_OF_ITERATIONS = 50
+    time_taken: float = 0
+    for i in tqdm(range(NUM_OF_ITERATIONS)):
+
+        # note that we should not measure time of graph creation
+        G = gnp_random_connected_graph(500, 0.4, False)
+
+        start = time.time()
+        floyd_warshall(G)
+        end = time.time()
+
+        time_taken += end - start
+
+    print(time_taken / NUM_OF_ITERATIONS)
